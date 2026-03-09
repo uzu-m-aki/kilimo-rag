@@ -1,0 +1,15 @@
+# Environment
+.env
+rag-env/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+
+# Data
+Data/*
