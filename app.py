@@ -10,6 +10,14 @@ from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.groq import Groq
 
+import os
+from dotenv import load_dotenv
+
+# Load the hidden keys from the .env file
+load_dotenv()
+
+key = os.getenv("GROQ_API_KEY")
+
 # --- 1. Page Configuration (Must be first) ---
 st.set_page_config(page_title="Kilimo AI", page_icon="✨", layout="centered")
 
@@ -84,12 +92,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-
-groq_key = os.getenv("GROQ_API_KEY")
 
 # --- 3. Sidebar & Settings ---
 with st.sidebar:
@@ -98,7 +101,7 @@ with st.sidebar:
     lang_choice = st.selectbox("🗣️ Lugha / Language", ["Swahili", "Kikuyu", "English"])
     
     # ⚠️ PASTE YOUR GROQ KEY HERE ⚠️
-    st.secrets.groq_key = groq_key
+    # st.secrets.groq_key = key
     
     st.divider()
     st.caption("Kumbukumbu (Memory Context)")
@@ -114,7 +117,7 @@ st.markdown(f'<p class="kilimo-subtitle">Your personal agronomist, currently spe
 
 # --- 4. Explicit LLM & Embedding Initialization ---
 embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
-llm = Groq(model="llama-3.1-8b-instant", api_key=groq_key, temperature=0.0)
+llm = Groq(model="llama-3.1-8b-instant", api_key=key, temperature=0.0)
 
 Settings.embed_model = embed_model
 Settings.llm = llm
